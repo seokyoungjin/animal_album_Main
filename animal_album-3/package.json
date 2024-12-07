@@ -1,0 +1,11 @@
+{
+  "name": "animal_album-3",
+  "version": "1.0.0",
+  "description": "1. api 호출할떄 async , await를 사용함으로서 비동기 프로그램을 보다 쉽게 처리 할수 있게 도와줌.마치 비동기처럼 작성할수 있음",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
