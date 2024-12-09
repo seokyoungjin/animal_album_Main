@@ -8,17 +8,20 @@ export default function App($app) {
     photos: [],
   };
 
+  // tab
   const tab = new TabBar({
     $app,
     initialState: this.state.currentTab,
     onClick: async (name) => {
-      history.pushState(null, null, `/${name}`); // URL 변경
+      history.pushState(null, `/${name}사진`, name); // URL 변경
       this.updateContent(name);
     },
   });
 
+  // content
   const content = new Content({ $app, initialState: [] });
 
+  // state
   this.setState = (newState) => {
     this.state = newState;
     tab.setState(this.state.currentTab);
@@ -26,19 +29,21 @@ export default function App($app) {
   };
 
   this.updateContent = async (tabName) => {
-    console.log(tabName);
-    const name = tabName === "all" ? "" : tabName;
-
-    const photos = await request(name);
-    this.setState({
-      ...this.state,
-      currentTab: tabName,
-      photos: photos,
-    });
+    try {
+      const currentTab = tabName === "all" ? "" : tabName;
+      const photos = await request(currentTab);
+      this.setState({
+        ...this.state,
+        currentTab: tabName,
+        photos: photos,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  window.addEventListener("popstate", () => {
-    this.updateContent(window.location.pathname.replace("/", "") || "all");
+  window.addEventListener("popstate", async () => {
+    this.updateContent(window.location.pathname.replace("/", ""));
   });
 
   const init = async () => {
